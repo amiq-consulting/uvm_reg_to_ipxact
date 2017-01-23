@@ -1,0 +1,9 @@
+# Automatically identify and compile all the source files in the project directory.
+# DO NOT explicitly list files/directories in 'dvt_auto_init' sections. Use 'dvt_init' sections instead.
++dvt_disable_expr_eval+false
++dvt_init
+-uvm
++incdir+sv
++incdir+tb
+sv/uvm_reg_to_ipxact_pkg.sv
+tb/top_tb.sv

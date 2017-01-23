@@ -1,0 +1,118 @@
+--------------------------------------------------------------------------------
+> (C) Copyright 2017 AMIQ Consulting
+>
+> Licensed under the Apache License, Version 2.0 (the "License");
+> you may not use this file except in compliance with the License.
+> You may obtain a copy of the License at
+>
+> http://www.apache.org/licenses/LICENSE-2.0
+>
+> Unless required by applicable law or agreed to in writing, software
+> distributed under the License is distributed on an "AS IS" BASIS,
+> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+> See the License for the specific language governing permissions and
+> limitations under the License.
+>
+--------------------------------------------------------------------------------
+
+### Title: UVM/SystemVerilog Register Model to IP-XACT ###
+
+### Name: uvm_reg_to_ipxact_pkg.uvm_reg_to_ipxact_printer
+
+### Modified: 13-Jan-2017
+
+### Support: office@amiq.com, [AMIQ Blog](www.amiq.com/consulting/blog)
+
+### Description: ###
+   * uvm_reg_to_ipxact_printer is an application that exports existing UVM/SystemVerilog register model definitions to an IP-XACT XML file
+
+* For more information on [IP-XACT](http://accellera.org/downloads/standards/ip-xact) checkout their [site](http://accellera.org/downloads/standards/ip-xact).
+
+### Directory structure: ###
+  This package contains the following directories:
+   *   docs      - HTML documentation
+   *   scripts   - All scripts used to run the test
+   *   sv        - All sv sources of the library
+   *   tb        - Verilog testbench, including usage example
+   *   xml       - IP-XACT XML file after the simulation
+
+### Demo: ###
+If you want to run with irun:
+1)   cd ./scripts
+2)   chmod +rwx irun_run.sh
+3)   ./irun_run.sh
+
+If you want to run with questa:
+1)   cd ./scripts
+2)   chmod +rwx questa_run.sh
+3)   ./questa_run.sh
+
+### How to export your register model using the demo testbench ###
+
+Make sure you include your register model files in the testbench:
+
+--------------------------------------------------------------------------------
+>     `include "my_reg_file.sv"
+--------------------------------------------------------------------------------
+
+Create an instance of your register model in the initial-task:
+
+--------------------------------------------------------------------------------
+>      my_reg_block reg_block;
+>      // create the register model instance
+>      reg_block = my_reg_block::type_id::create("basic_block");
+>      reg_block.build();
+>      reg_block.lock_model();
+--------------------------------------------------------------------------------
+
+Modify the global parameters of the IP-XACT model:
+
+--------------------------------------------------------------------------------
+>      basic_printer.set_parameters("my_reg_model.xml", "me", "my_reg_library", "1.4", "all_classes_file", 32, 32, 8);
+--------------------------------------------------------------------------------
+
+Now you can run the application by using one of the demo run scripts.
+You should see the result in /path/to/uvm_reg_to_ipxact/scripts/xml/my_reg_model.xml.
+
+### How to export your register model using an existing test ###
+
+You can follow the steps bellow if you already have a working register model and test that uses it.
+
+Make sure you include uvm_reg_to_ipxact_pkg.sv in the compile flow of your verification environment and import it in the test:
+
+--------------------------------------------------------------------------------
+>      import uvm_reg_to_ipxact_pkg::*;
+--------------------------------------------------------------------------------
+
+In the run phase of the test include the following code:
+--------------------------------------------------------------------------------
+>      // create a basic printer instance
+>      my_reg_block reg_block;
+>      uvm_reg_to_ipxact_printer basic_printer;
+>      basic_printer = uvm_reg_to_ipxact_printer::type_id::create("basic");
+>
+>      // Modify here the parameters with the correct ones
+>      basic_printer.set_parameters("ipxact.xml", "avendor", "alibrary", "1.4", "all_classes_file", 32, 32, 8);
+>
+>      // get the pointer to the register model instance
+>      reg_block = env.reg_agent.reg_model_inst;
+>
+>      // call of the export to ipxact on your instance of the register model
+>      basic_printer.export_ipxact(reg_block);
+--------------------------------------------------------------------------------
+
+Now you can run the test and you should see the result in /path/to/simulation/folder/my_reg_model.xml.
+
+### Implementation ###
+
+The application makes use of a tree of printers, all extending from uvm_reg_to_ipxact_printer_base.
+Each of the printers handles a certain part of the register model (e.g. field level, register level, map level).
+See more in the [HTML Documentation](https://github.com/amiq-consulting/uvm_reg_to_ipxact/tree/master/docs).
+
+### Improvements ###
+
+1. Buffer strings in the top level printer and write to file in chunks to lessen the hdd access
+2. Run tests on more complex maps
+3. Handle vendor-extensions: well this is more delicate, a vendor should explain what those are and how you can extract them
+
+

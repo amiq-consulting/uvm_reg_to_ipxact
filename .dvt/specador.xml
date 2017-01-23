@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<spechtml version="6">
+    <location>docs</location>
+    <clean-location>true</clean-location>
+
+    <title>UVM to IP-XACT Utility</title>
+
+    <overview-file>README.md</overview-file>
+
+    <enhance-comments>true</enhance-comments>
+
+    <use-new-html-style>true</use-new-html-style>
+
+    <doc-formatting-type>auto</doc-formatting-type>
+
+    <created-by-user-watermark>true</created-by-user-watermark>
+
+    <filter-string>*M_FIELD_QDA_ENUM*, `*uvm*, `*UVM*</filter-string>
+    <filter-path>./tb/uvm_reg_to_ipxact_test_reg_block.sv</filter-path>
+    <filter-path>/apps/amiq/dvt/predefined_projects/libs/uvm-1.2/*</filter-path>
+
+   <!-- Generate modules documentation. -->
+   <export-vlog-modules>false</export-vlog-modules>
+
+   <!-- Generate interfaces documentation. -->
+   <export-vlog-interfaces>false</export-vlog-interfaces>
+
+   <!-- Generate programs documentation. -->
+   <export-vlog-programs>false</export-vlog-programs>
+
+   <!-- Generate macros documentation. -->
+   <export-vlog-macros>true</export-vlog-macros>
+
+   <!-- Generate ifndef guards documentation. Default: false. -->
+   <export-vlog-ifndef-guards>false</export-vlog-ifndef-guards>
+
+   <!-- Generate control defines documentation. Default: true. -->
+   <export-vlog-control-defines>false</export-vlog-control-defines>
+
+   <!-- Generate elements in the global scope (typedefs, classes, functions, tasks etc.). -->
+   <export-vlog-global-scope>false</export-vlog-global-scope>
+
+   <!-- Generate packages documentation. -->
+   <export-vlog-packages>true</export-vlog-packages>
+
+   <!-- Generate specific package documentation. -->
+   <export-vlog-package>uvm_reg_to_ipxact_pkg</export-vlog-package>
+
+   <!-- Generate assertions documentation. -->
+   <export-vlog-assertions>false</export-vlog-assertions>
+
+   <!-- Generate covergroups documentation. -->
+   <export-vlog-covergroups>false</export-vlog-covergroups>
+
+   <!-- Generate interface signals documentation. -->
+   <hide-vlog-interface-signals>false</hide-vlog-interface-signals>
+
+   <!-- Generate UML inheritance diagram for each class. -->
+   <export-vlog-inheritance-diagram>true</export-vlog-inheritance-diagram>
+
+   <!-- Generate UML direct associations diagram for each class. -->
+   <export-vlog-direct-associations-diagram>true</export-vlog-direct-associations-diagram>
+
+   <!-- Generate UML collaboration diagram for each class. -->
+   <export-vlog-collaboration-diagram>true</export-vlog-collaboration-diagram>
+
+   <!-- Generate UML inheritance diagram for all classes in each package. -->
+   <export-vlog-classes-inheritance-diagram>true</export-vlog-classes-inheritance-diagram>
+
+   <!-- Generate module flow diagram for each module. -->
+   <export-vlog-module-diagram>true</export-vlog-module-diagram>
+
+   <!-- Generate module flow diagram including ports for each module. -->
+   <export-vlog-module-diagram-with-ports>false</export-vlog-module-diagram-with-ports>
+
+</spechtml>
