@@ -289,10 +289,12 @@ aobj)
 </b></p>
 					<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_close_file">close_file</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_element2string">element2string</a>
+, 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_get_en_indent">get_en_indent</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_get_fd">get_fd</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_get_level">get_level</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_indent">indent</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_open_file">open_file</a>
+, 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_set_en_indent">set_en_indent</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_set_fd">set_fd</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_set_level">set_level</a>
 , 	<a href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html#function_set_parent_printer">set_parent_printer</a>
@@ -338,34 +340,34 @@ aobj)
 				<ul id="collaboration_diagram" class="list-group panel-collapse collapse">
 			<img src="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_map_collaboration.png" border="0" usemap="#_collaboration_diagram" />
 			<map name="_collaboration_diagram">
-<area shape="rect" id="node1" href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_map.html"  alt="" coords="158,473,410,503">
-<area shape="rect" id="node2" href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html"  alt="" coords="156,379,412,410">
-<area shape="poly" id="edge1"  alt="" coords="281,473,281,423,287,423,287,473">
-<area shape="rect" id="node3"  alt="" coords="232,286,336,317">
-<area shape="poly" id="edge2"  alt="" coords="281,380,281,330,287,330,287,380">
-<area shape="rect" id="node4"  alt="" coords="5,193,94,223">
-<area shape="poly" id="edge3"  alt="" coords="231,298,170,287,138,277,107,264,86,250,69,235,72,231,89,246,109,259,140,272,172,282,232,293">
-<area shape="rect" id="node5"  alt="" coords="280,193,459,223">
-<area shape="poly" id="edge5"  alt="" coords="231,293,209,285,190,276,181,263,186,246,199,237,217,229,266,217,267,223,219,234,201,241,190,250,186,262,194,272,211,281,233,288">
-<area shape="poly" id="edge6"  alt="" coords="370,224,365,243,354,263,332,282,329,278,350,260,360,241,365,222">
-<area shape="rect" id="node6"  alt="" coords="208,6,357,37">
-<area shape="poly" id="edge7"  alt="" coords="364,194,348,135,334,98,316,63,305,48,309,44,321,60,339,96,353,133,369,192">
-<area shape="rect" id="node7"  alt="" coords="178,99,307,130">
-<area shape="poly" id="edge8"  alt="" coords="313,196,289,185,267,170,249,144,254,141,271,166,292,180,315,191">
-<area shape="rect" id="node8"  alt="" coords="428,99,537,130">
-<area shape="poly" id="edge11"  alt="" coords="384,191,454,136,457,140,388,195">
-<area shape="rect" id="node9"  alt="" coords="562,99,683,130">
-<area shape="poly" id="edge13"  alt="" coords="414,191,491,165,577,132,579,137,493,171,415,196">
-<area shape="rect" id="node10"  alt="" coords="47,99,153,130">
-<area shape="poly" id="edge14"  alt="" coords="295,196,203,171,134,138,136,134,205,165,296,191">
-<area shape="poly" id="edge17"  alt="" coords="396,221,415,240,419,251,416,263,402,276,386,287,351,299,349,294,384,282,399,272,411,260,414,251,411,242,392,225">
-<area shape="poly" id="edge9"  alt="" coords="200,132,184,142,172,156,159,184,156,209,164,233,181,260,198,275,220,286,217,291,195,280,177,263,159,236,151,209,154,183,167,153,181,138,198,127">
-<area shape="poly" id="edge10"  alt="" coords="246,99,269,47,274,49,251,101">
-<area shape="poly" id="edge12"  alt="" coords="455,102,374,64,327,44,329,39,376,59,457,98">
-<area shape="poly" id="edge4"  alt="" coords="624,130,618,158,606,195,587,232,559,264,522,279,468,290,350,301,350,295,468,285,521,274,556,259,583,229,601,193,613,157,618,129">
-<area shape="rect" id="node11"  alt="" coords="21,6,179,37">
-<area shape="poly" id="edge15"  alt="" coords="97,100,97,50,103,50,103,100">
-<area shape="poly" id="edge16"  alt="" coords="120,98,189,59,235,39,237,44,192,64,123,102"></map>
+<area shape="rect" id="node1" href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_map.html"  alt="" coords="162,473,443,503">
+<area shape="rect" id="node2" href="uvm_reg_to_ipxact_pkg-uvm_reg_to_ipxact_printer_base.html"  alt="" coords="161,379,444,410">
+<area shape="poly" id="edge1"  alt="" coords="300,473,300,423,305,423,305,473">
+<area shape="rect" id="node3"  alt="" coords="245,286,360,317">
+<area shape="poly" id="edge2"  alt="" coords="300,380,300,330,305,330,305,380">
+<area shape="rect" id="node4"  alt="" coords="5,193,105,223">
+<area shape="poly" id="edge3"  alt="" coords="245,298,182,286,116,264,94,250,75,234,79,230,97,246,118,259,183,281,246,293">
+<area shape="rect" id="node5"  alt="" coords="296,193,496,223">
+<area shape="poly" id="edge5"  alt="" coords="244,293,221,286,201,276,191,263,197,246,228,234,285,222,286,228,230,239,201,250,197,262,205,272,223,281,246,288">
+<area shape="poly" id="edge6"  alt="" coords="397,223,393,243,382,263,358,282,355,278,378,260,388,241,392,222">
+<area shape="rect" id="node6"  alt="" coords="225,6,388,37">
+<area shape="poly" id="edge7"  alt="" coords="391,194,376,135,363,98,344,63,332,47,336,44,349,60,367,96,381,133,396,193">
+<area shape="rect" id="node7"  alt="" coords="191,99,335,130">
+<area shape="poly" id="edge8"  alt="" coords="332,196,308,185,286,170,269,144,273,141,290,166,311,180,334,191">
+<area shape="rect" id="node8"  alt="" coords="460,99,580,130">
+<area shape="poly" id="edge11"  alt="" coords="413,191,489,135,492,139,416,195">
+<area shape="rect" id="node9"  alt="" coords="605,99,739,130">
+<area shape="poly" id="edge13"  alt="" coords="445,191,530,165,624,132,626,137,531,171,447,196">
+<area shape="rect" id="node10"  alt="" coords="47,99,167,130">
+<area shape="poly" id="edge14"  alt="" coords="311,196,212,171,141,138,143,133,214,165,312,191">
+<area shape="poly" id="edge17"  alt="" coords="426,221,449,239,454,251,450,263,438,272,420,280,374,292,373,287,418,275,435,268,446,260,449,251,445,242,423,225">
+<area shape="poly" id="edge9"  alt="" coords="209,132,192,142,178,156,171,173,173,187,183,224,184,244,191,260,211,275,233,286,231,290,208,279,187,263,179,245,177,224,167,188,166,172,174,153,188,138,206,127">
+<area shape="poly" id="edge10"  alt="" coords="267,99,292,47,297,50,272,101">
+<area shape="poly" id="edge12"  alt="" coords="489,102,400,64,352,44,354,39,402,59,491,97">
+<area shape="poly" id="edge4"  alt="" coords="673,130,667,159,655,195,636,233,607,263,589,273,566,280,506,291,374,301,374,296,505,286,564,275,587,268,604,259,631,230,650,193,662,157,668,129">
+<area shape="rect" id="node11"  alt="" coords="19,6,195,37">
+<area shape="poly" id="edge15"  alt="" coords="104,100,104,50,109,50,109,100">
+<area shape="poly" id="edge16"  alt="" coords="129,98,206,59,256,38,258,43,208,64,132,102"></map>
 			<br><a href="vlog-legend-classes.html"><span class="label label-primary">Legend</span></a><br>
 		</ul>
 
@@ -393,7 +395,7 @@ aobj)
 	</div>
 
 	<div class="footer">
-		<hr><p class="text-center">Generated by <b>vor</b> on Mon Jan 23 14:06:36 EET 2017 using <a href="http://www.dvteclipse.com/" target="_new">Specador<sup>TM</sup></a> Version 16.1.34</p>
+		<hr><p class="text-center">Generated by <b>vor</b> on Thu Feb 02 17:26:26 EET 2017 using <a href="http://www.dvteclipse.com/" target="_new">Specador<sup>TM</sup></a> Version 16.1.35</p>
     </div>
 
 	<script src="lib/jquery/js/jquery.js"></script>
