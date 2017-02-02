@@ -177,7 +177,6 @@ class uvm_reg_to_ipxact_printer extends uvm_reg_to_ipxact_printer_base;
       if (use_spirit) begin
          return "<spirit:component\n\
    xmlns:spirit=\"http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4\"\n\
-   xmlns:vendorExtensions=\"$UVM_RGM_HOME/builder/ipxact/schema\"\n\
    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\
    xsi:schemaLocation=\"XMLSchema/SPIRIT/VendorExtensions.xsd http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4 http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.4/index.xsd\">\n";
       end else begin

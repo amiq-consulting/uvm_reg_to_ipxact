@@ -24,17 +24,25 @@
 class uvm_reg_to_ipxact_printer_base extends uvm_object;
 
    `uvm_object_utils(uvm_reg_to_ipxact_printer_base)
+   
    // use the spirit standard or the ipxact standard
    static bit use_spirit = 0;
+   
    // base printer class
    local uvm_reg_to_ipxact_printer_base p_printer;
+   
    // IP-XACT XML file id
    local int m_fd = 0;
+   
    // text level in the IP-XACT XML file
    local int m_level = 0;
+   
    // text left indent space in the IP-XACT XML file
    local string m_indent_space = "";
-
+   
+   // enables XML indentation. by default is on
+   local bit m_en_indent = 1;
+   
    // constructor
    function new (string name = "uvm_reg_to_ipxact_printer_base");
       super.new(name);
@@ -48,7 +56,7 @@ class uvm_reg_to_ipxact_printer_base extends uvm_object;
    function void set_parent_printer(uvm_reg_to_ipxact_printer_base p_printer);
 
       this.p_printer = p_printer;
-
+      this.set_en_indent(p_printer.get_en_indent());
       if (p_printer != null) begin
          this.set_fd(p_printer.get_fd());
          this.set_level(p_printer.get_level()+1);
@@ -151,6 +159,21 @@ class uvm_reg_to_ipxact_printer_base extends uvm_object;
    function int get_level();
       return m_level;
    endfunction
+   
+   /* Get m_en_indent
+    * @return - enable indent flag
+    */
+   function bit get_en_indent();
+      return m_en_indent;
+   endfunction
+
+   /* Set m_en_indent
+    * @param m_en_indent - sets the enable indent flag
+    */
+   function void set_en_indent(bit m_en_indent);
+      this.m_en_indent = m_en_indent;
+   endfunction
+
 
    /**
     * Indent to the right the text by a specified level
@@ -160,7 +183,10 @@ class uvm_reg_to_ipxact_printer_base extends uvm_object;
     * @return string - the indented string
     */
    function string indent(string text = "", int level = 0);
-      return $sformatf("%s%s", {(level){m_indent_space}}, text);
+      if (m_en_indent)
+         return $sformatf("%s%s", {(level){m_indent_space}}, text);
+      else 
+         return text;
    endfunction
 
    /**

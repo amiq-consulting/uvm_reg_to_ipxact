@@ -39,6 +39,7 @@ module uvm_reg_to_ipxact_top;
 
       // Modify here "basic_block" with the instance name you want for the reg block class and "basic_block" with the initial block class name
       reg_block = basic_block::type_id::create("basic_block");
+      reg_block.configure(null, "tb_top.dut");
       reg_block.build();
       reg_block.lock_model();
 

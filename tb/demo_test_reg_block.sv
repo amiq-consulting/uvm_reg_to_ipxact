@@ -320,18 +320,15 @@ class basic_block extends uvm_reg_block;
       reg_block = reg_block_class::type_id::create("reg_block1", , get_full_name());
       reg_block.configure(this, "reg_file1");
       reg_block.build();
-      reg_block.lock_model();
       default_map.add_submap(reg_block.default_map, `UVM_REG_ADDR_WIDTH'h2000);
+      reg_block.lock_model();
 
       default_map = create_map("default_map2", 0, 1, UVM_LITTLE_ENDIAN);
       reg_block2 = reg_block_class::type_id::create("reg_block2", , get_full_name());
       reg_block2.configure(this, "reg_file2");
       reg_block2.build();
-      reg_block2.lock_model();
       default_map.add_submap(reg_block2.default_map, `UVM_REG_ADDR_WIDTH'h3000);
-
-      set_hdl_path_root("tb_top.dut");
-      this.lock_model();
+      reg_block2.lock_model();
 
    endfunction
 
