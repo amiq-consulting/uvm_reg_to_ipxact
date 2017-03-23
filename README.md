@@ -19,7 +19,7 @@
 
 ### Name: uvm_reg_to_ipxact_pkg.uvm_reg_to_ipxact_printer
 
-### Modified: 13-Jan-2017
+### Modified: 13-Feb-2017
 
 ### Support: office@amiq.com, [AMIQ Blog](www.amiq.com/consulting/blog)
 
@@ -47,6 +47,11 @@ If you want to run with questa:
 2)   chmod +rwx questa_run.sh
 3)   ./questa_run.sh
 
+If you want to run with vcs:
+1)   cd ./scripts
+2)   chmod +rwx vcs_run.sh
+3)   ./vcs_run.sh
+
 ### How to export your register model using the demo testbench ###
 
 Make sure you include your register model files in the testbench:
@@ -68,7 +73,7 @@ Create an instance of your register model in the initial-task:
 Modify the global parameters of the IP-XACT model:
 
 --------------------------------------------------------------------------------
->      basic_printer.set_parameters("my_reg_model.xml", "me", "my_reg_library", "1.4", "all_classes_file", 32, 32, 8);
+>      basic_printer.set_parameters("my_reg_model.xml", "me", "my_reg_library", "1.4", "all_classes_file", 1);
 --------------------------------------------------------------------------------
 
 Now you can run the application by using one of the demo run scripts.
@@ -92,7 +97,7 @@ In the run phase of the test include the following code:
 >      basic_printer = uvm_reg_to_ipxact_printer::type_id::create("basic");
 >
 >      // Modify here the parameters with the correct ones
->      basic_printer.set_parameters("ipxact.xml", "avendor", "alibrary", "1.4", "all_classes_file", 32, 32, 8);
+>      basic_printer.set_parameters("ipxact.xml", "avendor", "alibrary", "1.4", "all_classes_file", 1);
 >
 >      // get the pointer to the register model instance
 >      reg_block = env.reg_agent.reg_model_inst;
@@ -114,5 +119,3 @@ See more in the [HTML Documentation](https://github.com/amiq-consulting/uvm_reg_
 1. Buffer strings in the top level printer and write to file in chunks to lessen the hdd access
 2. Run tests on more complex maps
 3. Handle vendor-extensions: well this is more delicate, a vendor should explain what those are and how you can extract them
-
-

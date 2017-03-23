@@ -1,0 +1,7 @@
+
+REL_DEV_1_9 @2017-03-23
+- added support for VCS
+- fixed some of the performance issues
+
+REL_1_0 @2017-01-24
+- first version published at the same time with the article
