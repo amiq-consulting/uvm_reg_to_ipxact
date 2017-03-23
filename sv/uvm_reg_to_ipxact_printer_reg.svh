@@ -23,58 +23,68 @@
  */
 class uvm_reg_to_ipxact_printer_reg extends uvm_reg_to_ipxact_printer_base;
 
-   `uvm_object_utils(uvm_reg_to_ipxact_printer_reg)
+	`uvm_object_utils(uvm_reg_to_ipxact_printer_reg)
 
-   // field printer class
-   local uvm_reg_to_ipxact_printer_field m_field_printer;
+	// field printer class
+	local uvm_reg_to_ipxact_printer_field m_field_printer;
 
-   // constructor
-   function new (string name = "uvm_reg_to_ipxact_printer_reg");
+	// constructor
+	function new (string name = "uvm_reg_to_ipxact_printer_reg");
 
-      super.new(name);
-      // create the field printer object
-      m_field_printer = uvm_reg_to_ipxact_printer_field::type_id::create("field_printer");
-      // set the parent printer to be the register printer
-      m_field_printer.set_parent_printer(this);
+		super.new(name);
+		// create the field printer object
+		m_field_printer = uvm_reg_to_ipxact_printer_field::type_id::create("field_printer");
+		// set the parent printer to be the register printer
+		m_field_printer.set_parent_printer(this);
 
-   endfunction
+	endfunction
 
-   /**
-    * Write details about all the filed present in the received register
-    *
-    * @param aobj - an array of objects which will be used to extract xml elements
-    * @return string - an XML string with elements extracted from the object
-    */
-   function string to_xml_string(uvm_object aobj[]);
+	/**
+	 * Write details about all the filed present in the received register
+	 *
+	 * @param aobj - an array of objects which will be used to extract xml elements
+	 * @return string - an XML string with elements extracted from the object
+	 */
+	function string to_xml_string(uvm_object aobj[]);
 
-      // the reset mask format
-      string format_mask;
-      uvm_reg register;
-      uvm_reg_field fields[$];
+		// the reset mask format
+		string format_mask;
+		uvm_reg register;
+		uvm_reg_field fields[$];
+		string text[$];
+		int text_q_size = 0;
 
-      UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR: assert(aobj.size() > 0  && aobj[0] != null && $cast(register, aobj[0])) else
-         `uvm_error("UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR", "Illegal parameters received!");
-      to_xml_string = indent(xml_element_tag("register", 1), 5);
-      to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(element2string("name", register.get_name(), 1), 6));
-      to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(element2string("addressOffset", $sformatf("0x%16x", register.get_offset()), 1), 6));
-      to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(element2string("size", $sformatf("%2x", register.get_n_bits()), 1), 6));
-      if (register.has_reset()) begin
-         to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(xml_element_tag("reset", 1), 6));
-         to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(element2string("value", $sformatf("0x%16x", register.get_reset()), 1), 7));
-         format_mask={"0x",{(register.get_n_bits()/4){"f"}}};
-         to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(element2string("mask", format_mask, 1), 7));
-         to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(xml_element_tag("reset", 0), 6));
-      end
-      // get the fields for this register
-      register.get_fields(fields);
-      if (fields.size() > 0)
-         foreach (fields[i])
-            to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(m_field_printer.to_xml_string({fields[i]}), 6));
-      to_xml_string = $sformatf("%s\n%s", to_xml_string, indent(xml_element_tag("register", 0), 5));
+		UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR: assert(aobj.size() > 0  && aobj[0] != null && $cast(register, aobj[0])) else
+			`uvm_error("UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR", "Illegal parameters received!");
+		text.push_front(indent(xml_element_tag("register", 1), 4));
+		text.push_front({"\n", indent(element2string("name", register.get_name(), 1), 5)});
+		text.push_front({"\n", indent(element2string("addressOffset", $sformatf("0x%16x", register.get_offset()), 1), 5)});
+		text.push_front({"\n", indent(element2string("size", $sformatf("%2x", register.get_n_bits()), 1), 5)});
+		if (register.has_reset()) begin
+			text.push_front({"\n", indent(xml_element_tag("reset", 1), 5)});
+			text.push_front({"\n", indent(element2string("value", $sformatf("0x%16x", register.get_reset()), 1), 6)});
+			format_mask={"0x",{(register.get_n_bits()/4){"f"}}};
+			text.push_front({"\n", indent(element2string("mask", format_mask, 1), 6)});
+			text.push_front({"\n", indent(xml_element_tag("reset", 0), 5)});
+		end
+		// get the fields for this register
+		register.get_fields(fields);
+		if (fields.size() > 0)
+			foreach (fields[i])
+				text.push_front({"\n", indent(m_field_printer.to_xml_string({fields[i]}), 5)});
+		text.push_front({"\n", indent(xml_element_tag("register", 0), 4)});
+		// concatenate all the text=
+		text_q_size = text.size();
+		foreach (text[i]) begin
+			to_xml_string = {to_xml_string, text[text_q_size - i - 1]};
+			text[text_q_size - i - 1] = "";
+		end
+		fields.delete();
+		text.delete();
 
-      return to_xml_string;
+		return to_xml_string;
 
-   endfunction
+	endfunction
 
 endclass
 
