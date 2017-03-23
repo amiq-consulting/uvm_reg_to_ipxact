@@ -1,0 +1,18 @@
++acc 
++vpi 
+-timescale=1ns/1ps 
+-sverilog
+-full64 
++libext+.sv 
++libext+.svh
+
+// Project include directories
++incdir+${PROJECT_HOME}/sv
++incdir+${PROJECT_HOME}/tb
+
+// Compilation units
+${PROJECT_HOME}/sv/uvm_reg_to_ipxact_pkg.sv
+${PROJECT_HOME}/tb/top_tb.sv
+
+// Top module
+-top uvm_reg_to_ipxact_top
