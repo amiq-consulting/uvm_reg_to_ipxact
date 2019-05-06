@@ -44,7 +44,8 @@ class uvm_reg_to_ipxact_printer_field extends uvm_reg_to_ipxact_printer_base;
 		// field access type
 		string access = "", text[$];
 		int text_q_size = 0;
-
+		string result = "";
+		
 		UVM_REG_TO_IPXACT_PRINTER_FIELD_CAST_ERR: assert(aobj.size() > 0  && aobj[0] != null && $cast(field, aobj[0])) else
 			`uvm_error("UVM_REG_TO_IPXACT_PRINTER_FIELD_CAST_ERR", "Received item is empty!");
 		text.push_front(indent(xml_element_tag("field", 1), 0));
@@ -73,12 +74,12 @@ class uvm_reg_to_ipxact_printer_field extends uvm_reg_to_ipxact_printer_base;
 		text.push_front({"\n", indent(xml_element_tag("field", 0), 5)});
 		text_q_size = text.size();
 		foreach (text[i]) begin
-			to_xml_string = {to_xml_string, text[text_q_size - i - 1]};
+			result = {result, text[text_q_size - i - 1]};
 			text[text_q_size - i - 1] = "";
 		end
 		text.delete();
 
-		return to_xml_string;
+		return result;
 
 	endfunction
 
