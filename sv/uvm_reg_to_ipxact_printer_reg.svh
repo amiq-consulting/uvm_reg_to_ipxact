@@ -53,7 +53,8 @@ class uvm_reg_to_ipxact_printer_reg extends uvm_reg_to_ipxact_printer_base;
 		uvm_reg_field fields[$];
 		string text[$];
 		int text_q_size = 0;
-
+		string result = "";
+				
 		UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR: assert(aobj.size() > 0  && aobj[0] != null && $cast(register, aobj[0])) else
 			`uvm_error("UVM_REG_TO_IPXACT_PRINTER_REG_CAST_ERR", "Illegal parameters received!");
 		text.push_front(indent(xml_element_tag("register", 1), 4));
@@ -76,13 +77,13 @@ class uvm_reg_to_ipxact_printer_reg extends uvm_reg_to_ipxact_printer_base;
 		// concatenate all the text=
 		text_q_size = text.size();
 		foreach (text[i]) begin
-			to_xml_string = {to_xml_string, text[text_q_size - i - 1]};
+			result = {result, text[text_q_size - i - 1]};
 			text[text_q_size - i - 1] = "";
 		end
 		fields.delete();
 		text.delete();
 
-		return to_xml_string;
+		return result;
 
 	endfunction
 
