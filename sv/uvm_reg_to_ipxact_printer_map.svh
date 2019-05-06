@@ -51,7 +51,8 @@ class uvm_reg_to_ipxact_printer_map extends uvm_reg_to_ipxact_printer_base;
 		uvm_reg regs[$];
 		string text[$];
 		int text_q_size = 0;
-
+		string result = "";
+		
 		UVM_REG_TO_IPXACT_PRINTER_MAP_CAST_ERR: assert(aobj.size() == 2 && aobj[0] != null && aobj[1] != null && $cast(map, aobj[0]) && $cast(block, aobj[1])) else
 			`uvm_error("UVM_REG_TO_IPXACT_PRINTER_MAP_CAST_ERR", "The received item is empty!");
 		text.push_front({"\n", indent(xml_element_tag("memoryMap", 1), 2)});
@@ -71,13 +72,13 @@ class uvm_reg_to_ipxact_printer_map extends uvm_reg_to_ipxact_printer_base;
 		// concatenate all the text
 		text_q_size = text.size();
 		foreach (text[i]) begin
-			to_xml_string = {to_xml_string, text[text_q_size - i - 1]};
+			result = {result, text[text_q_size - i - 1]};
 			text[text_q_size - i - 1] = "";
 		end
 		regs.delete();
 		text.delete();
 
-		return to_xml_string;
+		return result;
 
 	endfunction
 
