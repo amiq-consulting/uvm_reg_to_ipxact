@@ -204,6 +204,7 @@ class uvm_reg_to_ipxact_printer_base extends uvm_object;
 	 * @return string - an XML string with elements extracted from the object
 	 */
 	virtual function string to_xml_string(uvm_object aobj[]);
+		return "";
 	endfunction
 
 endclass
