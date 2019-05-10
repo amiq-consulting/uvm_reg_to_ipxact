@@ -25,8 +25,6 @@ class uvm_reg_to_ipxact_printer extends uvm_reg_to_ipxact_printer_base;
 
 	`uvm_object_utils(uvm_reg_to_ipxact_printer)
 
-	// register block to be exported
-	local uvm_reg_block reg_block;
 	// maps found in a register block
 	local uvm_reg_map maps[$];
 	// map printer class
@@ -77,49 +75,60 @@ class uvm_reg_to_ipxact_printer extends uvm_reg_to_ipxact_printer_base;
 	 */
 	function void export_ipxact (uvm_reg_block areg_blk = null);
 
-		uvm_reg_to_ipxact_PRINTER_PARAMS_NOT_SET_ERR: assert (!(ipxact_file_name == "" || ipxact_name == "" || vendor == "" || version == "" || library_name == ""))
+	        // store all the register model details in this string in order to write it to the IP-XACT XML file in the end
+		string buffer = "";
+
+                uvm_reg_to_ipxact_PRINTER_PARAMS_NOT_SET_ERR: assert (!(ipxact_file_name == "" || ipxact_name == "" || vendor == "" || version == "" || library_name == ""))
 		else
 			`uvm_error("uvm_reg_to_ipxact_PRINTER_PARAMS_NOT_SET_ERR", "One or more of parameters{ipxact_file_name, ipxact_name, vendor, version, library} was not set. Please call the set_parameters function before calling the export_ipxact function!");
 		uvm_reg_to_ipxact_PRINTER_REG_BLK_ERR: assert (areg_blk != null)
 		else
 			`uvm_error("uvm_reg_to_ipxact_PRINTER_REG_BLK_ERR", "The received register block is empty!");
-		// save the received basic register block in this class register block global variable
-		reg_block = areg_blk;
 		// open the IP-XACT XML file
 		open_file(ipxact_file_name);
-		// write the details in the IP-XACT XML file
-		write_ipxact();
-		// close the IP-XACT XML file
+		// get the register block details in the IP-XACT XML format
+		buffer = to_xml_string({areg_blk});
+                // write the string buffer in the IP-XACT XML file
+                write2file(buffer);
+                // close the IP-XACT XML file
 		close_file();
 
 		return;
 
 	endfunction
 
-	/**
-	 * Write in the IP-XACT XML file
-	 */
-	function void write_ipxact();
+        /**
+	 * Write details about all the filed present in the received register block
+	 *
+	 * @param aobj - an array of objects which will be used to extract xml elements
+	 * @return string - an XML string with elements extracted from the object
+	 */	
+        function string to_xml_string(uvm_object aobj[]);
 
 		// counters
 		int i = 0, j = 0;
 		// store all the register model details in this string in order to write it to the IP-XACT XML file in the end
-		string buffer = "";
-		// for the basic register block obtain all its register blocks
-		uvm_reg_block reg_blocks[$];
+		string result= "";
+                // register block to be exported
+	        uvm_reg_block reg_block;
+                // for the basic register block obtain all its register blocks
+                uvm_reg_block reg_blocks[$];
+
+                UVM_REG_TO_IPXACT_PRINTER_REG_BLOCK_CAST_ERR: assert(aobj.size() > 0  && aobj[0] != null && $cast(reg_block, aobj[0])) else
+			`uvm_error("UVM_REG_TO_IPXACT_PRINTER_REG_BLOCK_CAST_ERR", "Illegal parameters received!");
 		// create the map printer object
 		map_printer = uvm_reg_to_ipxact_printer_map::type_id::create("map_to_print");
 		// set the parent printer to be the map printer object
 		map_printer.set_parent_printer(this);
-		// begin to store in string buffer
-		buffer = {buffer, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"};
-		buffer = {buffer, get_ipxact_header()};
+		// begin to store in string result
+		result = {result, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"};
+		result = {result, get_ipxact_header()};
 		set_level(get_level() + 1);
-		buffer = {buffer, indent(element2string("vendor", vendor, 1), 1), "\n"};
-		buffer = {buffer, indent(element2string("library", library_name, 1), 1), "\n"};
-		buffer = {buffer, indent(element2string("name", ipxact_name, 1), 1), "\n"};
-		buffer = {buffer, indent(element2string("version", version, 1), 1), "\n"};
-		buffer = {buffer, indent(xml_element_tag("memoryMaps", 1), 1)};
+		result = {result, indent(element2string("vendor", vendor, 1), 1), "\n"};
+		result = {result, indent(element2string("library", library_name, 1), 1), "\n"};
+		result = {result, indent(element2string("name", ipxact_name, 1), 1), "\n"};
+		result = {result, indent(element2string("version", version, 1), 1), "\n"};
+		result = {result, indent(xml_element_tag("memoryMaps", 1), 1)};
 		// obtain all register blocks for the basic register block
 		reg_block.get_blocks(reg_blocks, UVM_HIER);
 		if (reg_blocks.size() > 0) begin
@@ -127,10 +136,10 @@ class uvm_reg_to_ipxact_printer extends uvm_reg_to_ipxact_printer_base;
 				// for each register block obtain all its maps
 				reg_blocks[i].get_maps(maps);
 				if (maps.size() > 0) begin
-					// for each map store its details in the string buffer
+					// for each map store its details in the string result
 					foreach (maps[j]) begin
-						buffer = {buffer, map_printer.to_xml_string({maps[j], reg_blocks[i]})};
-						buffer = {buffer, get_all_submaps(maps[j], reg_blocks[i])};
+						result = {result, map_printer.to_xml_string({maps[j], reg_blocks[i]})};
+						result = {result, get_all_submaps(maps[j], reg_blocks[i])};
 					end
 				end
 				else
@@ -139,14 +148,11 @@ class uvm_reg_to_ipxact_printer extends uvm_reg_to_ipxact_printer_base;
 		end
 		else
 			`uvm_error("UVM_REG_TO_IPXACT_PRINTER", "No register blocks found! reg_blocks.size is 0.")
-		buffer = {buffer, "\n", indent(xml_element_tag("memoryMaps", 0), 1), "\n"};
+		result = {result, "\n", indent(xml_element_tag("memoryMaps", 0), 1), "\n"};
 		set_level(0);
-		buffer = {buffer, indent(xml_element_tag("component", 0), 0)};
-		// write the string buffer in the IP-XACT XML file
-		write2file(buffer);
-		buffer = "";
+		result = {result, indent(xml_element_tag("component", 0), 0)};
 
-		return;
+		return result;
 
 	endfunction
 

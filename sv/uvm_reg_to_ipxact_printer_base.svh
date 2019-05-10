@@ -21,7 +21,7 @@
 /**
  *  Base printer class from which all the other classes inherit.
  */
-class uvm_reg_to_ipxact_printer_base extends uvm_object;
+virtual class uvm_reg_to_ipxact_printer_base extends uvm_object;
 
 	`uvm_object_utils(uvm_reg_to_ipxact_printer_base)
 
@@ -203,9 +203,7 @@ class uvm_reg_to_ipxact_printer_base extends uvm_object;
 	 * @param aobj - an array of objects which will be used to extract xml elements
 	 * @return string - an XML string with elements extracted from the object
 	 */
-	virtual function string to_xml_string(uvm_object aobj[]);
-		return "";
-	endfunction
+        pure virtual function string to_xml_string(uvm_object aobj[]);
 
 endclass
 
